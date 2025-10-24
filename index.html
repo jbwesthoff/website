@@ -1,1 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <!-- ====== Meta & Styles ====== -->
+  <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+  <style>
+    /* ====== CSS Variables ====== */
+    :root {
+      --color-white: #fff;
+      --color-black: #00112b;
+      --color-blue: #0066ff;
+      --color-light-blue: #d4e5ff;
+      --color-sheen: #B7990D;
+
+      --color-gunmetal: #334155;
+      --color-mist: #667080;
+      --color-midnight: #28374c;
+      --color-storm: #354966;
+
+      --safe-pad: 32px;
+      --content-max: 1300px;
+      --pad: var(--safe-pad);
+
+      --logo-size: calc(clamp(1rem, 3vw, 2.5rem) + 24px);
+      --logo-gap: 12px;
+    }
+
+    @media (min-width: 1300px) {
+      :root {
+        --pad: max(var(--safe-pad), calc((100vw - var(--content-max)) / 2));
+      }
+    }
+
+    /* ====== Base Styles ====== */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      margin: 0;
+    }
+
+    .section {
+      scroll-margin-top: 56px;
+      background: var(--color-white);
+      color: var(--color-black);
+      padding: 24px var(--pad);
+    }
+
+    p {
+      opacity: 0.85;
+      margin: 0 0 0 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    .eyebrow {
+      font-family: 'Anton';
+      text-transform: uppercase;
+      font-weight: 400;
+      margin: 0 0 0 0;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1.15;
+    }
+
+    h2 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.05;
+    }
+
+    h3 {
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      line-height: 1.3;
+    }
+
+    .eyebrow {
+      font-size: clamp(1rem, 2vw, 2.5rem);
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .eyebrow--red {
+      color: var(--color-storm);
+    }
+
+    .eyebrow--mist {
+      color: var(--color-mist);
+    }
+
+    .eyebrow--orange {
+      color: var(--color-midnight);
+    }
+
+    .eyebrow--blue {
+      color: var(--color-blue);
+    }
+
+    .desc {
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
+      line-height: 1.6;
+      max-width: 60ch;
+      margin: 0;
+      opacity: 0.85;
+      letter-spacing: 0;
+    }
+
+    /* ====== Section Head Styles ====== */
+
+    .intro-grid {
+      text-align: center;
+    }
+
+    :where(.intro-head) {
+      align-items: center;
+    }
+
+    .intro-head+.desc {
+      margin-top: 12px;
+    }
+
+    .intro-grid {
+      display: grid
+    }
+
+    @media (min-width:1024px) {
+      .intro-grid {
+        text-align: unset;
+      }
+
+      :where(.intro-head) {
+        align-items: flex-start;
+      }
+
+      .intro-grid {
+        grid-template-columns: 2fr 1fr;
+        column-gap: 24px;
+        align-items: end;
+      }
+
+      .intro-grid>.eyebrow,
+      .intro-grid>h2,
+      .intro-grid>.intro-head {
+        grid-column: 1;
+      }
+
+      .intro-grid>p:not(.eyebrow):first-of-type {
+        grid-column: 2;
+      }
+
+      .intro-grid--pad2>.desc {
+        padding-inline: 48px;
+      }
+    }
+
+    /* ====== Tile Base Styles ====== */
+    .tile {
+      border-radius: 24px;
+      padding: 40px;
+      --tile-bg: var(--color-storm);
+      --tile-fg: var(--color-white);
+      background: var(--tile-bg);
+      color: var(--tile-fg);
+      position: relative;
+    }
+
+    .tile--blue {
+      --tile-bg: var(--color-blue);
+      --tile-fg: var(--color-white)
+    }
+
+    .tile--mist {
+      --tile-bg: var(--color-mist);
+      --tile-fg: var(--color-white)
+    }
+
+    .tile--gunmetal {
+      --tile-bg: var(--color-gunmetal);
+      --tile-fg: var(--color-white)
+    }
+
+    .tile--midnight {
+      --tile-bg: var(--color-midnight);
+      --tile-fg: var(--color-white)
+    }
+
+    .tile--storm {
+      --tile-bg: var(--color-storm);
+      --tile-fg: var(--color-white)
+    }
+
+    .tile--light-blue {
+      --tile-bg: var(--color-light-blue);
+      --tile-fg: var(--color-black);
+      background: var(--tile-bg);
+      color: var(--tile-fg);
+    }
+
+    .tile h3 {
+      margin: 0 0 24px 0;
+      color: inherit;
+    }
+
+    .tile p {
+      margin: 0;
+      color: inherit;
+      line-height: 170%;
+      letter-spacing: 0em;
+    }
+
+    /* ====== Header Components ====== */
+    .top-container {
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 24px var(--pad);
+      text-align: center;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      background: var(--color-black);
+      color: var(--color-white);
+      position: sticky;
+      top: 0;
+      padding: 24px var(--pad);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      z-index: 1000;
+    }
+
+    /* ===== Brand (left group) ===== */
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
+      position: relative;
+      padding-left: calc(var(--logo-size) + var(--logo-gap));
+    }
+
+    .brandname {
+      text-transform: uppercase;
+      font-weight: 700;
+      line-height: 1;
+      font-size: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    /* ===== Nav (right group) ===== */
+    .nav {
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+    }
+
+    .nav a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: color .3s ease;
+    }
+
+    .nav a:hover,
+    .nav a:focus {
+      color: var(--color-blue);
+      text-decoration: none;
+    }
+
+    .logo {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: var(--logo-size);
+      width: var(--logo-size);
+      display: block;
+      pointer-events: none;
+    }
+
+    .logo--left {
+      left: 0;
+    }
+
+    .logo-right {
+      right: var(--pad);
+    }
+
+
+    @media (max-width: 1023px) {
+      .nav { display: none; }
+      .logo-right { display: block; }
+      .header { padding-right: calc(var(--logo-size) + var(--logo-gap) + var(--pad)); }
+    }
+
+    @media (min-width: 1024px) {
+      .nav { display: flex; }
+      .logo-right { display: none; }
+      .header { padding-right: var(--pad); }
+    }
+
+    .burger {
+      outline: none;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .burger__line {
+      transform-box: view-box;
+      transform-origin: 12 12;
+      transition:
+        transform 280ms cubic-bezier(.2, .8, .2, 1),
+        opacity 200ms ease;
+    }
+
+    .burger__line--top { transform-origin: 3px 5px;}
+    .burger__line--middle { transform-origin: 3px 12px; }
+    .burger__line--bottom { transform-origin: 3px 19px }
+
+    .burger.is-open .burger__line--top { transform: rotate(37.87deg) scaleX(1.267); }
+    .burger.is-open .burger__line--middle { opacity: 0; }
+    .burger.is-open .burger__line--bottom { transform: rotate(-37.87deg) scaleX(1.267); }
+
+    .burger { cursor: pointer; }
+
+    .burger__line { stroke-linecap: round; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .burger__line {
+        transition: none;
+      }
+    }
+
+    /* ====== Three Tile Section ====== */
+    .trio-section {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 600px) and (max-width: 1023px) {
+      .trio-section {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "intro tile1"
+          "tile2 tile3";
+        place-content: center
+      }
+
+      .trio-intro {
+        grid-area: intro;
+        place-content: center
+      }
+
+      .trio-section .tile-1 {
+        grid-area: tile1;
+      }
+
+      .trio-section .tile-2 {
+        grid-area: tile2;
+      }
+
+      .trio-section .tile-3 {
+        grid-area: tile3;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .trio-section {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+      }
+
+      .trio-intro {
+        grid-column: 1 / -1;
+      }
+
+      #contact.trio-section .tile-1 {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      #contact.trio-section .tile-2 {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      #contact.trio-section .tile-3 {
+        grid-column: 3;
+        grid-row: 2;
+      }
+    }
+
+    /* ====== 2-Tile Section ====== */
+    .duo-section {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+
+    /* Tablet & PC */
+    @media (min-width: 1024px) {
+      .duo-section {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: auto;
+      }
+
+      .duo-intro {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ====== About layout swap (desktop only) ====== */
+    .about {
+      display: grid;
+      gap: 24px;
+      align-items: center;
+      grid-template-columns: 1fr;
+    }
+
+    .about-body .desc,
+    .about-body .intro-head {
+      text-align: center;
+    }
+
+    @media (min-width: 600px) {
+      .about {
+        align-items: start;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 24px;
+      }
+
+      .about-body .desc,
+      .about-body .intro-head {
+        text-align: unset;
+      }
+    }
+
+    /* ====== Media Section (Image + Text) ====== */
+    .project {
+      display: grid;
+      gap: 24px;
+      align-items: center;
+      grid-template-columns: 1fr;
+    }
+
+    .project-image {
+      aspect-ratio: 16 / 10;
+      width: 100%;
+      position: relative;
+      container-type: size;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .project-image .track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 450ms cubic-bezier(.2, .8, .2, 1);
+      will-change: transform;
+    }
+
+    .project-image .slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      object-position: center;
+      /* remove per-slide border radius so slides "stick" together visually */
+      border-radius: 0;
+    }
+
+    .carousel-btn {
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      background: var(--color-black);
+      color: var(--color-white);
+      position: absolute;
+      width: clamp(40px, 5vw, 56px);
+      height: clamp(40px, 5vw, 56px);
+      width: clamp(40px, 10cqi, 56px);
+      height: clamp(40px, 10cqi, 56px);
+      overflow: hidden;
+      top: 50%;
+      translate: 0 -50%;
+      transition: background-color 0.3s ease;
+      rotate: 0deg;
+    }
+
+    .carousel-btn:hover {
+      background: var(--color-white);
+    }
+
+    .carousel-btn .floating-action__icon-svg {
+      width: clamp(20px, 5cqi, 28px);
+    }
+
+    .carousel-btn .floating-action__icon-svg--copy {
+      color: var(--color-black);
+      transform: translate(200%);
+    }
+
+    .carousel-btn:hover .floating-action__icon-svg:first-child {
+      transform: translate(-200%);
+    }
+
+    .carousel-btn:hover .floating-action__icon-svg--copy {
+      transform: translate(0);
+    }
+
+    .carousel-btn--prev {
+      left: clamp(20px, 2.5vw, 28px);
+      left: clamp(20px, 4.5cqi, 28px);
+    }
+
+    .carousel-btn--next {
+      right: clamp(20px, 2.5vw, 28px);
+      right: clamp(20px, 4.5cqi, 28px);
+    }
+
+    .carousel-btn--prev {
+      rotate: 0deg;
+    }
+
+    .carousel-btn--next {
+      rotate: 180deg;
+    }
+
+    .project-body {
+      padding: 24px;
+    }
+
+    .project-body h2 {
+      margin: 0 0 8px 0;
+    }
+
+    /* Tablet & up: side-by-side */
+    @media (min-width: 600px) {
+      .project {
+        align-items: start;
+        grid-template-columns: 1.5fr 1fr;
+        column-gap: 24px;
+      }
+
+      .project-image img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    /* ====== Floating Action Button (for external links) ====== */
+
+    .floating-action {
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      background: var(--tile-fg);
+      color: var(--tile-bg);
+      position: absolute;
+      width: clamp(40px, 5vw, 56px);
+      height: clamp(40px, 5vw, 56px);
+      overflow: hidden;
+      top: 40px;
+      right: 40px;
+    }
+
+    .floating-action__icon-svg {
+      position: absolute;
+      transition: transform 0.3s ease-in-out;
+      /* apply always */
+      width: clamp(20px, 2.5vw, 28px);
+    }
+
+    .floating-action__icon-svg:first-child {
+      transform: translate(0);
+      /* main icon visible */
+    }
+
+    .floating-action__icon-svg--copy {
+      transform: translate(-100%, 100%);
+      /* copy icon hidden */
+      color: var(--color-blue);
+    }
+
+    /* Hover state: swap positions */
+    .floating-action:hover .floating-action__icon-svg:first-child {
+      transform: translate(100%, -100%);
+      /* slide out */
+    }
+
+    .floating-action:hover .floating-action__icon-svg--copy {
+      transform: translate(0);
+      /* slide in */
+    }
+
+    /* ====== Footer ====== */
+    .footer {
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 24px var(--pad);
+    }
+
+    /* ====== Icon Contact ====== */
+    .contact__icon-svg {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      overflow: hidden;
+      top: 40px;
+      right: 40px;
+      width: clamp(2rem, 3.5vw, 2.5rem);
+      height: auto;
+    }
+
+    .tile.copyable {
+      cursor: pointer;
+    }
+
+    .copy-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      background: var(--color-light-blue);
+      color: var(--color-black);
+      padding: 10px 14px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 2000;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ====== Top Banner ====== -->
+  <div class="top-container">
+    <h1>Westhoff:<br>Design, Support<br> &amp; Automation</h1>
+  </div>
+
+  <!-- ====== Sticky Header ====== -->
+  <div class="header" id="myHeader">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo logo--left"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" tabindex="0"
+      aria-label="Open menu" aria-expanded="false">
+      <path d="M21 2L20 3"></path>
+      <path d="M3 2L4 3"></path>
+      <path d="M21 16L20 15"></path>
+      <path d="M3 16L4 15"></path>
+      <path d="M9 18H15"></path>
+      <path d="M10 21H14"></path>
+      <path d="M11.9998 3C7.9997 3 5.95186 4.95029 5.99985 8C6.02324 9.48689 6.4997 10.5 7.49985 11.5C8.5 12.5 9 13 8.99985 15H14.9998C15 13.0001 15.5 12.5 16.4997 11.5001L16.4998 11.5C17.4997 10.5 17.9765 9.48689 17.9998 8C18.0478 4.95029 16 3 11.9998 3Z"></path>
+    </svg>
+      <span class="brandname">WDSA</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#partners">Partners</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo logo-right burger"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="button" tabindex="0"
+      aria-label="Open menu" aria-expanded="false">
+      <path class="burger__line burger__line--top" d="M3 5H21"></path>
+      <path class="burger__line burger__line--middle" d="M3 12H21"></path>
+      <path class="burger__line burger__line--bottom" d="M3 19H21"></path>
+    </svg>
+
+  </div>
+
+  <!-- ====== Main Content ====== -->
+  <main>
+
+    <!-- Section Services -->
+    <section class="section trio-section" id="services">
+      <div class="trio-intro intro-grid intro-grid--pad2">
+        <div class="intro-head">
+          <p class="eyebrow eyebrow--blue">What I Offer</p>
+          <h2>Services</h2>
+        </div>
+        <p class="desc">I help manufacturers and machine owners design, build, and maintain reliable control systems.
+        </p>
+      </div>
+
+      <article class="tile trio-tile tile-1 tile--mist">
+        <h3>Design</h3>
+        <p>I design and implement complete control systems — from electrical cabling to operator interfaces with
+          intuitive graphics — tailored to your machine and workflow.</p>
+      </article>
+
+      <article class="tile trio-tile tile-2 tile--storm">
+        <h3>Support</h3>
+        <p>I troubleshoot across mechanics, hydraulics, electronics, and software. Whether it’s a black box failure or a
+          hidden fault, I quickly analyze, pinpoint, and solve to get you running again.</p>
+      </article>
+
+      <article class="tile trio-tile tile-3 tile--gunmetal">
+        <h3>Automation</h3>
+        <p>I integrate ISOBUS and custom machine controls to improve accuracy, productivity, and ease of use, even in
+          challenging agricultural and off-road environments.</p>
+      </article>
+    </section>
+
+    <!-- Section About -->
+    <section class="section about" id="about">
+      <div class="about-body">
+        <div class="intro-head">
+          <p class="eyebrow eyebrow--blue">Profile</p>
+          <h2>About Me</h2>
+        </div>
+        <p class="desc">I’m a hands-on system engineer with over 40 years in off-road and agricultural machinery. I
+          combine mechatronics, hydraulics, and automation to solve complex challenges.</p>
+      </div>
+      <ul class="bullets">
+        <li><b>Experience</b> — 40+ years designing and supporting off-road machines</li>
+        <li><b>Domains</b> — Mechatronics, hydraulics & control systems</li>
+        <li><b>Work style</b> — Independent consultant, bringing trusted partners when needed</li>
+        <li><b>Approach</b> — Curiosity, precision, and getting things done</li>
+      </ul>
+    </section>
+
+    <!-- Section Projects -->
+    <section class="section" id="projects">
+      <div class="project">
+        <div class="project-image" data-carousel data-tag-target="#projects .project-body .eyebrow"
+          data-title-target="#projects .project-body h2" data-text-target="#projects .project-body .desc">
+          <img src="images/projects/project1.jpg" alt="…" data-tag="Plough Control" data-title="John Deere"
+            data-text="ISOBUS plough control with John Deere look & feel VT interface. Compatible with several tractor generations and GPS systems. Supports side shift, implement drawbar steering, and ISOBUS track control.">
+          <img src="images/projects/project2.jpg" alt="…" data-tag="Precision Planter" data-title="Wifo"
+            data-text="Full ISOBUS Virtual Terminal and Task Control. Enables task map planting by bulbs per hectare, planting distance, or kg/ha for precise planting.">
+          <img src="images/projects/project3.jpg" alt="…" data-tag="Cultivator Potato Planter" data-title="Baselier"
+            data-text="Full ISOBUS Virtual Terminal and Task Control for section and rate control. Optional load-cell bunker weighing for accurate kg/ha planting.">
+          <button class="carousel-btn carousel-btn--prev" type="button" aria-label="Previous image" data-prev>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="floating-action__icon-svg">
+              <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              class="floating-action__icon-svg floating-action__icon-svg--copy">
+              <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <button class="carousel-btn carousel-btn--next" type="button" aria-label="Next image" data-next>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="floating-action__icon-svg">
+              <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              class="floating-action__icon-svg floating-action__icon-svg--copy">
+              <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="project-body" aria-live="polite">
+          <div class="intro-head">
+            <p class="eyebrow eyebrow--blue">Should be tag</p>
+            <h2>Should be title</h2>
+          </div>
+          <p class="desc">Should be a discription</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Section Partners -->
+    <section class="section duo-section" id="partners">
+      <div class="duo-intro intro-grid intro-grid--pad2">
+        <div class="intro-head">
+          <p class="eyebrow eyebrow--blue">Collaboration</p>
+          <h2>Partners</h2>
+        </div>
+        <p class="desc">Strong results come from strong partnerships — delivering complete, reliable control solutions
+          end to end.</p>
+      </div>
+
+      <article class="tile duo-tile tile-1 tile--midnight">
+        <a class="floating-action" href="https://jautomatisering.nl/" target="_blank" rel="noopener noreferrer"
+          aria-label="Visit Jautomatisering">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="floating-action__icon-svg">
+            <path d="M5.64 18.36L18.36 5.64M18.36 5.64V17.64M18.36 5.64H6.36" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="floating-action__icon-svg floating-action__icon-svg--copy">
+            <path d="M5.64 18.36L18.36 5.64M18.36 5.64V17.64M18.36 5.64H6.36" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <h3>Jautomatisering</h3>
+        <p>Specialists in industrial automation and control, we design and deliver tailored solutions for complex and
+          large-scale
+          projects. From software for hydraulics and CANbus systems to full integration and long-term support, we tackle
+          challenging automation demands together.</p>
+      </article>
+
+      <article class="tile duo-tile tile-2 tile--mist">
+        <a class="floating-action" href="https://epec.fi/" target="_blank" rel="noopener noreferrer"
+          aria-label="Visit EPEC B.V.">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="floating-action__icon-svg">
+            <path d="M5.64 18.36L18.36 5.64M18.36 5.64V17.64M18.36 5.64H6.36" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="floating-action__icon-svg floating-action__icon-svg--copy">
+            <path d="M5.64 18.36L18.36 5.64M18.36 5.64V17.64M18.36 5.64H6.36" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <h3>EPEC B.V.</h3>
+        <p>Experts in advanced electronics and connectivity for mobile machinery, we deliver robust system solutions
+          from control
+          units to telematics and assistance systems. Serving agriculture and off-road sectors, we boost efficiency,
+          precision,
+          and reliability in the toughest environments.</p>
+      </article>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="section trio-section" id="contact">
+      <div class="trio-intro intro-grid intro-grid--pad2">
+        <div class="intro-head">
+          <p class="eyebrow eyebrow--blue">Say Hello</p>
+          <h2>Contact</h2>
+        </div>
+        <p class="desc">Reach out to discuss your project or ask any questions.</p>
+      </div>
+
+      <article class="tile trio-tile tile-1 tile--blue copyable" data-copy="info@wdsa.nl" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="contact__icon-svg">
+          <path d="M7 9L12 12.5L17 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M2 17V7C2 5.89543 2.89543 5 4 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H4C2.89543 19 2 18.1046 2 17Z"
+            stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+        <h3>Email</h3>
+        <p>info@wdsa.nl</p>
+      </article>
+
+      <article class="tile trio-tile tile-2 tile--blue copyable" data-copy="+31 6 43618593" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="contact__icon-svg">
+          <path
+            d="M18.1182 14.702L14 15.5C11.2183 14.1038 9.5 12.5 8.5 10L9.26995 5.8699L7.81452 2L4.0636 2C2.93605 2 2.04814 2.93178 2.21654 4.04668C2.63695 6.83 3.87653 11.8765 7.5 15.5C11.3052 19.3052 16.7857 20.9564 19.802 21.6127C20.9668 21.8662 22 20.9575 22 19.7655L22 16.1812L18.1182 14.702Z"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <h3>Call</h3>
+        <p>+31 6 43618593</p>
+      </article>
+
+      <article class="tile trio-tile tile-3 tile--light-blue copyable"
+        data-copy="KVK: 68600747 · Vestigingsnr: 000037024566 · Grasbroek 12, 9301WC Roden" role="button" tabindex="0">
+        <h3>Information</h3>
+        <p>KVK-nummer: 68600747<br>Vestigingsnummer: 000037024566<br>Grasbroek 12, 9301WC Roden</p>
+      </article>
+    </section>
+
+    <footer id="footer" class="footer">
+      <div class="container">
+        <small>&copy; 2025 WDSA</small>
+      </div>
+    </footer>
+
+  </main>
+  <div class="copy-toast" id="copyToast" aria-live="polite"></div>
+</body>
+
+<!-- ====== Script Toast ====== -->
+<script>
+  (() => {
+    const tiles = document.querySelectorAll('.tile.copyable');
+    if (!tiles.length) return;
+
+    // Create toast ref
+    const toast = document.getElementById('copyToast') || (() => {
+      const el = document.createElement('div');
+      el.className = 'copy-toast';
+      el.id = 'copyToast';
+      el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+      return el;
+    })();
+
+    // Copy utility with fallback
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch {
+        return false;
+      }
+    }
+
+    function getCopyPayload(tile) {
+      // Priority: data-copy attr
+      let text = tile.getAttribute('data-copy');
+      if (text) return text.trim();
+
+      // Fallback: first <p> text
+      const p = tile.querySelector('p');
+      if (p) {
+        // Strip excessive whitespace and line breaks
+        return p.innerText.replace(/\s+\n/g, ' ').replace(/\s{2,}/g, ' ').trim();
+      }
+      // Last resort: all text inside tile (minus headings)
+      return Array.from(tile.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE)
+        .map(n => n.textContent)
+        .join(' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    function onActivate(tile) {
+      const payload = getCopyPayload(tile);
+      if (!payload) return;
+
+      copyText(payload).then(ok => {
+        const label = tile.querySelector('h3')?.textContent?.trim() || 'Copied';
+        showToast(ok ? `${label}: copied to clipboard` : 'Copy failed');
+      });
+    }
+
+    tiles.forEach(tile => {
+      // Make it obviously interactive (you already have pointer cursor in CSS)
+      tile.setAttribute('role', tile.getAttribute('role') || 'button');
+      if (!tile.hasAttribute('tabindex')) tile.tabIndex = 0;
+
+      tile.addEventListener('click', e => {
+        // Ignore clicks on actual links/buttons inside the tile
+        const target = e.target.closest('a, button');
+        if (target) return;
+        onActivate(tile);
+      });
+
+      tile.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onActivate(tile);
+        }
+      });
+    });
+  })();
+</script>
+
+<!-- ====== Script Carousel ====== -->
+<script>
+  (() => {
+    const wrap = document.querySelector('[data-carousel]');
+    if (!wrap) return;
+
+    const prevBtn = wrap.querySelector('[data-prev]');
+    const nextBtn = wrap.querySelector('[data-next]');
+
+    // Optional text targets (fall back to global [data-carousel-*] if not provided)
+    const tagEl = document.querySelector(wrap.dataset.tagTarget || '[data-carousel-tag]');
+    const titleEl = document.querySelector(wrap.dataset.titleTarget || '[data-carousel-title]');
+    const textEl = document.querySelector(wrap.dataset.textTarget || '[data-carousel-text]');
+
+    // Collect original images as the "real" slides
+    const realImgs = Array.from(wrap.querySelectorAll('img'));
+    const N = realImgs.length;
+    if (N < 1) return;
+
+    // Build a track and move images into it (so CSS .project-image .track rules apply)
+    const track = document.createElement('div');
+    track.className = 'track';
+    wrap.insertBefore(track, wrap.firstChild); // track sits above buttons
+    realImgs.forEach(img => {
+      img.classList.add('slide');
+      track.appendChild(img);
+    });
+
+    // Add head/tail clones for seamless wrap
+    const headClone = realImgs[0].cloneNode(true);       // clone of first
+    const tailClone = realImgs[N - 1].cloneNode(true);   // clone of last
+    track.insertBefore(tailClone, track.firstChild);     // [tailClone, ...real...]
+    track.appendChild(headClone);                        // [...real..., headClone]
+
+    const REAL_START = 1;       // first real slide index inside track
+    const REAL_END = N;       // last real slide index inside track
+    let i = REAL_START;         // current index in track-space (includes clones)
+    let isAnimating = false;
+
+    function setX(index, animated = true) {
+      if (!animated) {
+        const prev = track.style.transition;
+        track.style.transition = 'none';
+        track.style.transform = `translateX(-${index * 100}%)`;
+        // force reflow, then restore transition (CSS provides default timing)
+        void track.offsetWidth;
+        track.style.transition = prev || '';
+      } else {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      }
+    }
+
+    function toReal(trackIndex) {
+      return (trackIndex - 1 + N) % N; // 0..N-1
+    }
+
+    function syncTextFrom(realIndex) {
+      const srcEl = realImgs[realIndex]; // original (non-clone)
+      if (!srcEl) return;
+      if (tagEl) tagEl.textContent = srcEl.dataset.tag || '';
+      if (titleEl) titleEl.textContent = srcEl.dataset.title || '';
+      if (textEl) textEl.textContent = srcEl.dataset.text || '';
+    }
+
+    function moveBy(step) {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // Figure out which REAL slide we’re heading to (0..N-1)
+      const currentReal = toReal(i);
+      const intendedReal = (currentReal + (step > 0 ? 1 : -1) + N) % N;
+
+      // ✅ Update text BEFORE the visual move begins
+      syncTextFrom(intendedReal);
+
+      // Move one step in track-space (this includes the clones)
+      const target = i + step;
+      setX(target, true);
+
+      const onEnd = () => {
+        track.removeEventListener('transitionend', onEnd);
+        isAnimating = false;
+
+        // If we landed on a clone, snap to the matching real slide (no animation)
+        if (target === 0) {
+          i = REAL_END;
+          setX(i, false);
+        } else if (target === REAL_END + 1) {
+          i = REAL_START;
+          setX(i, false);
+        } else {
+          i = target;
+        }
+
+        // No text update here anymore — it already matches the incoming slide.
+      };
+
+      track.addEventListener('transitionend', onEnd, { once: true });
+    }
+
+    const next = () => moveBy(1);
+    const prev = () => moveBy(-1);
+
+    // ====== AUTOPLAY (showcase until user interacts) ======
+    const AUTOPLAY_MS = 3000; // change to taste
+    let autoplayTimeout = null;
+    let hasInteracted = false;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // precise pause/resume bookkeeping
+    let remainingMs = AUTOPLAY_MS;
+    let lastStartTs = 0;
+    let isPaused = false;
+
+    function clearAutoplayTimeout() {
+      if (autoplayTimeout) {
+        clearTimeout(autoplayTimeout);
+        autoplayTimeout = null;
+      }
+    }
+
+    function scheduleNext(delay) {
+      clearAutoplayTimeout();
+      lastStartTs = Date.now();
+      autoplayTimeout = setTimeout(() => {
+        if (!document.hidden && !isAnimating) next();
+        // after firing, reset the “remaining” window and schedule the next one
+        remainingMs = AUTOPLAY_MS;
+        scheduleNext(remainingMs);
+      }, Math.max(0, delay));
+    }
+
+    function startAutoplay() {
+      if (prefersReducedMotion || hasInteracted || N <= 1) return;
+      isPaused = false;
+      // kick once right away to match your original behavior
+      requestAnimationFrame(() => { if (!document.hidden && !isAnimating) next(); });
+      remainingMs = AUTOPLAY_MS;
+      scheduleNext(remainingMs);
+    }
+
+    function pauseAutoplay() {
+      if (hasInteracted || prefersReducedMotion) return;
+      if (isPaused) return;
+      isPaused = true;
+      // compute remaining time in current cycle and hold it
+      const elapsed = Date.now() - lastStartTs;
+      remainingMs = Math.max(0, remainingMs - elapsed);
+      clearAutoplayTimeout();
+    }
+
+    function resumeAutoplay() {
+      if (hasInteracted || prefersReducedMotion) return;
+      if (!isPaused) return;
+      isPaused = false;
+      scheduleNext(remainingMs || AUTOPLAY_MS);
+    }
+
+    function stopAutoplayPermanently() {
+      hasInteracted = true;  // permanently disable after manual interaction
+      clearAutoplayTimeout();
+    }
+
+    // pause on hover; resume on leave (true pause/unpause)
+    wrap.addEventListener('mouseenter', pauseAutoplay);
+    wrap.addEventListener('mouseleave', resumeAutoplay);
+
+    // pause when tab is hidden; resume when visible (before interaction)
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? pauseAutoplay() : resumeAutoplay();
+    });
+
+    // stop autoplay on any manual navigation (permanent)
+    nextBtn && nextBtn.addEventListener('click', stopAutoplayPermanently, { once: true });
+    prevBtn && prevBtn.addEventListener('click', stopAutoplayPermanently, { once: true });
+    wrap.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') stopAutoplayPermanently();
+    }, { once: true });
+
+    startAutoplay();
+
+
+    // Wire controls
+    nextBtn && nextBtn.addEventListener('click', next);
+    prevBtn && prevBtn.addEventListener('click', prev);
+
+    // Optional keyboard
+    wrap.tabIndex = wrap.tabIndex || 0;
+    wrap.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    });
+
+    // Initial position (avoid no-op transition lock)
+    setX(i, false);
+    syncTextFrom(0);
+  })();
+</script>
+
+<script>
+  (() => {
+    const btn = document.querySelector('.burger');
+    if (!btn) return;
+
+    function toggle() {
+      const open = btn.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    btn.addEventListener('click', toggle);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  })();
+</script>
+
+</html>
