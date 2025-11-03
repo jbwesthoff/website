@@ -59,6 +59,12 @@
       }
     }
 
+    @media (max-width: 600px) {
+      .section {
+        padding-inline: 16px;
+      }
+    }
+
     /* ====== Base Styles ====== */
     body {
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -69,7 +75,7 @@
       scroll-margin-top: 56px;
       background: var(--color-white);
       color: var(--color-black);
-      padding: 24px var(--pad);
+      padding: 64px var(--pad);
     }
 
     p, .desc {
@@ -110,7 +116,7 @@
     }
 
     .eyebrow {
-      font-size: clamp(1rem, 2vw, 2.5rem);
+      font-size: clamp(1.5rem, 2vw, 2.5rem);
       line-height: 1;
       display: inline-block;
     }
@@ -256,8 +262,8 @@
       width: calc(var(--logo-size) * (var(--sticker-vb-w) / var(--logo-vb-w)));
       height: calc(var(--logo-size) * (var(--sticker-vb-h) / var(--logo-vb-h)));
       pointer-events: none;
-      z-index: -1;
       color: var(--color-blue);
+      z-index: -1;
     }
 
     /* ===== Header ===== */
@@ -265,7 +271,7 @@
       background: var(--color-black);
       color: var(--color-white);
       position: sticky;
-      top: -0.5px;
+      top: -1px;
       padding: 24px var(--pad);
       display: flex;
       justify-content: space-between;
@@ -644,6 +650,12 @@
       object-fit: cover;
       object-position: center;
       border-radius: 0;
+    }
+
+    @media (max-width: 600px) {
+      .project-image {
+        aspect-ratio: 4 / 3;
+      }
     }
 
     .carousel-btn {
